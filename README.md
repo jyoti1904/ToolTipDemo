@@ -1,27 +1,18 @@
 # XelloToolTipChallenge
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
 
-## Development server
+1. Tooltip functionality has been written as a reusable directive
+2. Angular CLI is used
+3. Reviewer can run solution with a simple npm command
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Functionalities implemented:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+1. Single page application with routing
+    Route - /ToolTipDemo, or link provided on home page to redirect to this route
+2. When button A is clicked, if button B’s tooltip is open, it will close and vice versa 
+3. Only one tooltip is visible at a time
+4. Tooltip is getting closed when clicked anywhere outside
+5. Tooltip is getting closed on press of esc key
+6. Styling using Bootstrap classes
+7. Responsive design
