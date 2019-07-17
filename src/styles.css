@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+.cls-tooltip {
+    background-color: #121213;
+    color: #f3f3ef;
+    position: absolute;      
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  li {
+    justify-items: left;
+    padding: 10px;
+  }
