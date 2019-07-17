@@ -23,8 +23,7 @@ export class ToolTipDirective {
   }
 
   @HostListener('document:click', ['$event'])
-  public onDocumentClick(event: MouseEvent): void {
-      debugger;
+  public onDocumentClick(event: MouseEvent): void {     
         const targetElement = event.target as HTMLElement;
       if (targetElement && !this.elRef.nativeElement.contains(targetElement)) {
        this.HideToolTip();
