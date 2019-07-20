@@ -1,4 +1,4 @@
-import { Directive, Input, EventEmitter,HostListener,ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[tooltip]'
@@ -6,26 +6,25 @@ import { Directive, Input, EventEmitter,HostListener,ElementRef, Renderer2 } fro
 
 
 export class ToolTipDirective {
-  tooltip: HTMLElement;  
+  tooltip: HTMLElement;
   @Input('tooltip') toolTipText: string;
-  @Input('tooltip-alignment') alignment: string;  
+  @Input('tooltip-alignment') alignment: string;
 
-  constructor(private elRef: ElementRef, private rdr: Renderer2) { 
+  constructor(private elRef: ElementRef, private rdr: Renderer2) {
 
   }
 
 
   @HostListener('click') onClick() {
-    if (!this.tooltip)
-     { 
+    if (!this.tooltip) {
          this.ShowToolTip();
      }
   }
 
   @HostListener('document:click', ['$event'])
-  public onDocumentClick(event: MouseEvent): void {     
+  public onDocumentClick(event: MouseEvent): void {
         const targetElement = event.target as HTMLElement;
-      if (targetElement && !this.elRef.nativeElement.contains(targetElement)) {
+        if (targetElement && !this.elRef.nativeElement.contains(targetElement)) {
        this.HideToolTip();
       }
   }
@@ -36,54 +35,84 @@ export class ToolTipDirective {
 
   ShowToolTip() {
     this.tooltip = this.rdr.createElement('span');
-    this.rdr.appendChild( this.tooltip,this.rdr.createText(this.toolTipText));    
+    this.rdr.appendChild( this.tooltip, this.rdr.createText(this.toolTipText));
     this.rdr.appendChild(document.body, this.tooltip);
-    this.rdr.addClass(this.tooltip,'cls-tooltip');
+    this.rdr.addClass(this.tooltip, 'cls-tooltip');
     this.SetToolTipAlignment();
   }
 
-  HideToolTip() 
-  {
-     if(this.tooltip)
-    {
-        
+  HideToolTip() {
+     if (this.tooltip) {
+
         this.rdr.removeChild(document.body, this.tooltip);
         this.tooltip = null;
     }
   }
 
-  SetToolTipAlignment()
-  {
-    let btnPosition= this.elRef.nativeElement.getBoundingClientRect();
-    let toolTipPosition =this.tooltip.getBoundingClientRect();
+  // In case back button is pressed, tool tip should get removed
+  @HostListener('window:popstate', ['$event'])
+  onPopState() {
+    if (this.tooltip) {
+      this.rdr.removeChild(document.body, this.tooltip);
+      this.tooltip = null;
+  }
+  }
 
-    let toolTipTop=0;
-    let toolTipLeft=0;
-    const margin=10;
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    if (this.tooltip) {
+    const toolTipPosition = this.tooltip.getBoundingClientRect();
+    const btnPosition = this.elRef.nativeElement.getBoundingClientRect();
+    const YScrollPOs = window.pageYOffset;
+    let toolTipTop = 0;
+    const margin = 10;
+    if (toolTipPosition.top < 0) {
+      toolTipTop = btnPosition.bottom + (toolTipPosition.height - margin);
+    } else {
+      toolTipTop = btnPosition.top - (toolTipPosition.height + margin);
+    }
 
-    if(this.alignment.toLowerCase()=="top")
-    {
-        toolTipTop= btnPosition.top -(toolTipPosition.height+margin);
-        toolTipLeft = btnPosition.left-10;
-
-    }
-    else if (this.alignment.toLowerCase()=="bottom")
-    {
-        toolTipTop= btnPosition.bottom +(toolTipPosition.height-margin);
-        toolTipLeft = btnPosition.left-10;
-    }
-    else if (this.alignment.toLowerCase()=="left")
-    {
-        toolTipTop= btnPosition.top +(btnPosition.height/2)-margin;
-        toolTipLeft = btnPosition.left-(toolTipPosition.width+margin);
-    }
-    else if (this.alignment.toLowerCase()=="right")
-    {
-        toolTipTop= btnPosition.top +(btnPosition.height/2)-margin;
-        toolTipLeft = btnPosition.left+(toolTipPosition.width-margin);
-    }
-    this.rdr.setStyle(this.tooltip, 'top', toolTipTop+'px');
-    this.rdr.setStyle(this.tooltip, 'left', toolTipLeft+'px'); 
+    toolTipTop = toolTipTop + YScrollPOs;
+    this.rdr.setStyle(this.tooltip, 'top', toolTipTop + 'px');
+  }
 
   }
+
+  SetToolTipAlignment() {
+    if (!this.tooltip) {
+      return;
+    }
+    const YScrollPOs = window.pageYOffset;
+    const btnPosition = this.elRef.nativeElement.getBoundingClientRect();
+    const toolTipPosition = this.tooltip.getBoundingClientRect();
+
+    let toolTipTop = 0;
+    let toolTipLeft = 0;
+    const margin = 10;
+
+    if (this.alignment.toLowerCase() === 'top') {
+        toolTipTop = btnPosition.top - (toolTipPosition.height + margin);
+        toolTipLeft = btnPosition.left - 10;
+
+    } else if (this.alignment.toLowerCase() === 'bottom') {
+        toolTipTop = btnPosition.bottom + (toolTipPosition.height - margin);
+        toolTipLeft = btnPosition.left - 10;
+    } else if (this.alignment.toLowerCase() === 'left') {
+        toolTipTop = btnPosition.top + (btnPosition.height / 2) - margin;
+        toolTipLeft = btnPosition.left - (toolTipPosition.width + margin);
+    } else if (this.alignment.toLowerCase() === 'right') {
+        toolTipTop = btnPosition.top + (btnPosition.height / 2) - margin;
+        toolTipLeft = btnPosition.left + (toolTipPosition.width - margin);
+    }
+    toolTipTop = toolTipTop + YScrollPOs;
+    this.rdr.setStyle(this.tooltip, 'top', toolTipTop + 'px');
+    this.rdr.setStyle(this.tooltip, 'left', toolTipLeft + 'px');
+
+  }
+
+  @HostListener('window:resize', ['$event'])
+onResize() {
+  this.SetToolTipAlignment();
+}
+
 }

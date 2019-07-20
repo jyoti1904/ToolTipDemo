@@ -6,7 +6,7 @@ import { ToolTipComponent } from './tool-tip/tool-tip.component';
 
 const routes: Routes = [
 
-  {path:'ToolTipDemo',component:ToolTipComponent}
+  {path: 'ToolTipDemo', component: ToolTipComponent}
 ];
 
 @NgModule({

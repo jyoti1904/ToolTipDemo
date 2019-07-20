@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ToolTipDirective } from './tooltip.directive';
 import { ToolTipComponent } from './tool-tip/tool-tip.component';
-import {AppRoutingModule} from "./app-routing.module";
+import {AppRoutingModule} from './app-routing.module';
 
 
 
@@ -13,7 +13,7 @@ import {AppRoutingModule} from "./app-routing.module";
     AppComponent,
     ToolTipDirective,
     ToolTipComponent
-   
+
   ],
   imports: [
     BrowserModule,
