@@ -1,0 +1,25 @@
+@import './vars';
+
+.cls-tooltip {
+    background-color: $background-color;
+    color: $font-color;
+    position: absolute;      
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;    
+  }
+
+  li{
+    justify-items: left;
+    padding: $li-padding;
+  }
+
+  h1{
+    text-align: center;
+  }
+
+  h2{
+    text-align: center;
+  }
+  
+
