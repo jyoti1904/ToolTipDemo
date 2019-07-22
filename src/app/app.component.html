@@ -17,18 +17,15 @@
     </div>
   </nav>
  <header class="header">
-    <h1>Reusable Tooltip Functionality</h1>
+    <h1>Reusable Tooltip Functionality/Accessibility Feature</h1>
  </header>
  <section class="container" >
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <h2>Tooltip functionality has been written as a reusable directive</h2>
-        </div>
-      </div>
       <br>
       <div class="row">
           <div  *ngIf="route.children.length === 0" class="col-sm-12 col-md-12 col-lg-12">
-            <a [routerLink]="['/ToolTipDemo']" href="">Click here to see ToolTip demo</a>            
+            <a [routerLink]="['/ToolTipDemo']" href="">Click here to see ToolTip demo</a>  
+            <br>
+            <a [routerLink]="['/accessibility']" href="">Click here to see keyboard navigation accessibility</a>            
           </div>
          
       </div> 
