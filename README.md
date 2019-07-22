@@ -1,7 +1,7 @@
 Bonus points implemented:
 
 1. scrolling down to an open tooltip should detect being at the edge of the screen and change position to be below the button
-2. Styling using bootstrap css
+2. Styling using bootstrap scss
 3. keyboard arrow navigation accessibility feature added
 4. Responsive design
 
