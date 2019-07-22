@@ -1,17 +1,28 @@
-import { Directive, Input, EventEmitter, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Directive, Input, EventEmitter, HostListener, ElementRef, Renderer2, OnInit, OnDestroy } from '@angular/core';
 
 @Directive({
   selector: '[tooltip]'
 })
 
 
-export class ToolTipDirective {
+export class ToolTipDirective implements OnInit, OnDestroy{
   tooltip: HTMLElement;
   @Input('tooltip') toolTipText: string;
   @Input('tooltip-alignment') alignment: string;
 
   constructor(private elRef: ElementRef, private rdr: Renderer2) {
 
+  }
+
+  ngOnInit() {
+
+  }
+
+  ngOnDestroy() {
+    if (this.tooltip) {
+      this.rdr.removeChild(document.body, this.tooltip);
+      this.tooltip = null;
+  }
   }
 
 
@@ -49,15 +60,6 @@ export class ToolTipDirective {
     }
   }
 
-  // In case back button is pressed, tool tip should get removed
-  @HostListener('window:popstate', ['$event'])
-  onPopState() {
-    if (this.tooltip) {
-      this.rdr.removeChild(document.body, this.tooltip);
-      this.tooltip = null;
-  }
-  }
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     if (this.tooltip) {
@@ -77,6 +79,12 @@ export class ToolTipDirective {
   }
 
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.SetToolTipAlignment();
+  }
+
 
   SetToolTipAlignment() {
     if (!this.tooltip) {
@@ -110,9 +118,5 @@ export class ToolTipDirective {
 
   }
 
-  @HostListener('window:resize', ['$event'])
-onResize() {
-  this.SetToolTipAlignment();
-}
 
 }

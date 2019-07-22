@@ -1,25 +1,40 @@
 @import './vars';
+@import './navbar';
+@import './header';
+@import './footer';
+@import './mixin';
+
+
+
+body {
+  padding: 0;
+  margin: 0;
+  
+}
+
+div{
+    text-align: center;
+}
+
+h2{
+  @include textFormatting(); //mixin called
+}
+
+ul{
+    text-align: left;
+  li{
+  justify-items: left;
+  padding: $li-padding;
+    }
+} 
 
 .cls-tooltip {
-    background-color: $background-color;
-    color: $font-color;
-    position: absolute;      
-    text-align: center;
-    font-style: italic;
-    font-weight: bold;    
-  }
+  background-color: $background-color;
+  color: $font-color;
+  position: absolute;      
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;    
+}
 
-  li{
-    justify-items: left;
-    padding: $li-padding;
-  }
-
-  h1{
-    text-align: center;
-  }
-
-  h2{
-    text-align: center;
-  }
-  
 

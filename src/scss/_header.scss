@@ -1,0 +1,10 @@
+@import './mixin';
+
+header{
+    background: $headerBgColor;
+    
+      h1{
+        @include textFormatting(); //mixin called
+      }
+    }
+
